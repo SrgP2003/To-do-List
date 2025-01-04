@@ -19,14 +19,43 @@
     font-weight: bold;
     resize: none;
     overflow: auto;
-    width: 50em;
     color: #312f2f;
+    background-color: rgb(253, 191, 191);
+    border: 2px solid rgb(253, 191, 191);
 }
-.card, #textarea-tasks{
+.div-lg-task-container{
     background-color: rgb(253, 191, 191);
     margin: 1rem;
     padding: 1rem;
-    border: 4px solid rgb(119, 21, 21);
+    border: 2px solid rgb(119, 21, 21);
     border-radius: 10px;
-    box-shadow: 7px -7px rgb(119, 21, 21);
+}
+.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add{
+    background-color: rgb(253, 191, 191);
+    color: rgb(119, 21, 21);
+    border: 1px solid rgb(119, 21, 21);
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    margin: 0.5em;
+}
+.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add:hover{
+    background-color: rgb(119, 21, 21);
+    color: white;
+    border: 1px solid rgb(119, 21, 21);
+    border-radius: 10px;
+    padding: 0.5em 1em;
+    margin: 0.5em;
+}
+.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add:active{
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+.div-lg-task-container .div-md-task-buttons .form-check-priority input{
+    background-color: rgb(255, 243, 243);
+    width: 2.2em;
+    height: 1.2em;
+    margin-left: 0em;
+}
+.div-lg-task-container .div-md-task-buttons .form-check-priority input:checked{
+    background-color: rgb(119, 21, 21);
 }
