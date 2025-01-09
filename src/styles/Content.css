@@ -22,6 +22,7 @@
     color: #312f2f;
     background-color: rgb(253, 191, 191);
     border: 2px solid rgb(253, 191, 191);
+    height: auto;
 }
 .div-lg-task-container{
     background-color: rgb(253, 191, 191);
@@ -58,4 +59,18 @@
 }
 .div-lg-task-container .div-md-task-buttons .form-check-priority input:checked{
     background-color: rgb(119, 21, 21);
+}
+
+
+/* Para un posible componente adicional */
+.ul-secondary ul li, .ul-priority ul li{
+    list-style-type: none;
+    line-height: 1.8;
+}
+.ul-secondary ul li .form-check-both:checked,
+.ul-primary ul li .form-check-both:checked{
+    background-color: rgb(119, 21, 21);
+}
+.ul-secondary ul .li-md-empty-task{
+    color: rgb(0, 0, 0, 0.4);
 }

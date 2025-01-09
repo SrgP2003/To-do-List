@@ -10,8 +10,9 @@ export default function Content() {
     const [secondaryTasks, setSecondaryTasks] = useState([]); //Estado para guardar las tareas sin prioridad
 
     const handleClickAddTask = () => { //Funcion que sera aplicada sobre el boton para agregar tareas
-        if (!tasks.length)
+        if (!tasks.length || !secondaryTasks.length) { //Validacion para que no se agreguen tareas vacias
             alert("Por favor, escriba una tarea");
+        }
         if (isPriority)
             setPrimaryTasks([...primaryTasks, tasks]);
         else {
@@ -19,7 +20,11 @@ export default function Content() {
         }
         setTasks("");
     }
-
+    const handleClickErasePrimaryTask = () => { //Funcion que sera aplicada sobre el boton para borrar tareas -> REVISAR LUEGO
+        if(!primaryTasks)
+            alert("No hay tareas para borrar");
+        setPrimaryTasks(primaryTasks.filter((task, index) => index !== primaryTasks.length - 1));   
+    }
     return (
         <>
             <main className="main-content">
@@ -33,7 +38,7 @@ export default function Content() {
                     <article className="row">
                         <div className="col-12">
                             <div className="div-lg-task-container">
-                                <textarea value={tasks} onChange={e => setTasks(e.target.value)} rows="5" id="textarea-tasks" className="form-control mb-2" placeholder="Escribe algo..."></textarea>
+                                <textarea value={tasks} onChange={e => setTasks(e.target.value)} id="textarea-tasks" rows="4" className="form-control mb-2" placeholder="Escribe algo..."></textarea>
                                 <hr />
                                 <div className="row div-md-task-buttons">
                                     <div className="col-sm-12 col-md-6 col-lg-6 div-md-button d-flex justify-content-center">
@@ -55,7 +60,7 @@ export default function Content() {
                         <hr />
                     </article>
                     <article className="row">
-                        <div className="col-md-12 col-lg-6">
+                        <div className="ul-priority col-md-12 col-lg-6">
                             <TaskChart title={"Mis mayores prioridades"}> {/* Se implementan las tareas con prioridad */}
                                 <ul>
                                     {
@@ -66,7 +71,7 @@ export default function Content() {
                                 </ul>
                             </TaskChart>
                         </div>
-                        <div className="col-md-12 col-lg-6">
+                        <div className="ul-secondary col-md-12 col-lg-6">
                             <TaskChart title={"Sin prioridad pero necesarias"}> {/* Se implementan las tareas sin prioridad */}
                                 <ul>
                                     {
