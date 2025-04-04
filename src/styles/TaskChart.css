@@ -1,4 +1,4 @@
-.card{
+.card-task-chart{
     background-color: rgb(253, 191, 191);
     font-size: 1.3em;
     margin: 1rem;
@@ -6,4 +6,31 @@
     border: 4px solid rgb(119, 21, 21);
     border-radius: 10px;
     box-shadow: 7px -7px rgb(119, 21, 21);
+}
+
+
+
+.card-single-task{
+    background-color: rgba(255, 82, 82, 0.2);
+}
+.btn-task-modify, .btn-task-delete{
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease-in-out, transform 0.3s ease-in-out;
+}
+.card-single-task .row-options:hover .btn-task-modify, .card-single-task .row-options:hover .btn-task-delete{
+    opacity: 1;
+    transform: translateY(0);
+}
+.col-text-options{
+    font-size: 0.7em;
+    opacity: 0.6;
+    cursor: pointer;
+}
+.card-single-task input:checked{
+    background-color: rgb(119, 21, 21);
+    border-color: rgb(119, 21, 21, 0.5);
+}
+.card-single-task input{
+    cursor: pointer;
 }

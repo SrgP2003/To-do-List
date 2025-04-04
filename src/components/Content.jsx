@@ -1,30 +1,49 @@
 import "../styles/Content.css";
 import TaskChart from "./TasksTools";
+import { SingleTask } from "./TasksTools";
 import "../styles/TaskChart.css";
 import { useState } from "react";
 
 export default function Content() {
-    const [tasks, setTasks] = useState(""); //Estado para capturar las tareas que se digiten en el textarea
-    const [isPriority, setIsPriority] = useState(false); //Estado para capturar si la tarea es prioridad o no
-    const [primaryTasks, setPrimaryTasks] = useState([]); //Estado para guardar las tareas con prioridad
-    const [secondaryTasks, setSecondaryTasks] = useState([]); //Estado para guardar las tareas sin prioridad
+    const [tasks, setTasks] = useState("");
+    const [primaryTasks, setPrimaryTasks] = useState([]);
+    const [secondaryTasks, setSecondaryTasks] = useState([]);
+    const [priorityTask, setPriorityTask] = useState(false);
 
-    const handleClickAddTask = () => { //Funcion que sera aplicada sobre el boton para agregar tareas
-        if (!tasks.length || !secondaryTasks.length) { //Validacion para que no se agreguen tareas vacias
-            alert("Por favor, escriba una tarea");
+    //Logica para agregar tareas e identificar si esta es prioridad o no
+    const handleClickAddTasks = () => {
+        const objectPrimaryTasks = {
+            id: primaryTasks.length + 1,
+            taskP: tasks
         }
-        if (isPriority)
-            setPrimaryTasks([...primaryTasks, tasks]);
+        const objectSecondaryTasks = {
+            id: secondaryTasks.length + 1,
+            taskS: tasks
+        }
+
+        if (tasks == "") {
+            alert("Por favor, ingresa una tarea");
+            setPrimaryTasks([]);
+            setSecondaryTasks([]);
+        }
         else {
-            setSecondaryTasks([...secondaryTasks, tasks]);
+            if (priorityTask) {
+                setPrimaryTasks(primaryTasks => {
+                    return (primaryTasks) ? [...primaryTasks, objectPrimaryTasks] : [objectPrimaryTasks];
+                })
+                setPriorityTask(false);
+                setTasks("");
+            }
+            else {
+                setSecondaryTasks(secondaryTasks => {
+                    return (secondaryTasks) ? [...secondaryTasks, objectSecondaryTasks] : [objectSecondaryTasks];
+                })
+            }
+            setPriorityTask(false);
+            setTasks("");
         }
-        setTasks("");
     }
-    const handleClickErasePrimaryTask = () => { //Funcion que sera aplicada sobre el boton para borrar tareas -> REVISAR LUEGO
-        if(!primaryTasks)
-            alert("No hay tareas para borrar");
-        setPrimaryTasks(primaryTasks.filter((task, index) => index !== primaryTasks.length - 1));   
-    }
+
     return (
         <>
             <main className="main-content">
@@ -38,16 +57,16 @@ export default function Content() {
                     <article className="row">
                         <div className="col-12">
                             <div className="div-lg-task-container">
-                                <textarea value={tasks} onChange={e => setTasks(e.target.value)} id="textarea-tasks" rows="4" className="form-control mb-2" placeholder="Escribe algo..."></textarea>
+                                <textarea id="textarea-tasks" rows="4" value={tasks} onChange={e => setTasks(e.target.value)} className="form-control mb-2" placeholder="Escribe algo..."></textarea>
                                 <hr />
                                 <div className="row div-md-task-buttons">
                                     <div className="col-sm-12 col-md-6 col-lg-6 div-md-button d-flex justify-content-center">
-                                        <button onClick={handleClickAddTask} className="btn btn-add">Agregar</button>
+                                        <button className="btn btn-add" onClick={handleClickAddTasks}>Agregar</button>
                                     </div>
                                     <div className="col-sm-12 col-md-6 col-lg-6 form-check-priority form-check form-switch d-flex align-items-center justify-content-center">
                                         <div className="row">
                                             <div className="col-3">
-                                                <input checked={isPriority} onChange={e => setIsPriority(e.target.checked)} title="Marcar actividad como prioridad" className="form-check-input" type="checkbox" role="switch" />
+                                                <input title="Marcar actividad como prioridad" checked={priorityTask} className="form-check-input" onChange={e => setPriorityTask(e.target.checked)} type="checkbox" role="switch" />
                                             </div>
                                             <div className="col-9 ">
                                                 <label className="form-check-label">PRIORIDAD</label>
@@ -62,24 +81,20 @@ export default function Content() {
                     <article className="row">
                         <div className="ul-priority col-md-12 col-lg-6">
                             <TaskChart title={"Mis mayores prioridades"}> {/* Se implementan las tareas con prioridad */}
-                                <ul>
-                                    {
-                                        primaryTasks.map((task, index) => (
-                                            <li key={index}>{task}</li>
-                                        ))
-                                    }
-                                </ul>
+                                {
+                                    primaryTasks.map(({ id, taskP }) => (
+                                        <SingleTask id={id} task={taskP} />
+                                    ))
+                                }
                             </TaskChart>
                         </div>
                         <div className="ul-secondary col-md-12 col-lg-6">
                             <TaskChart title={"Sin prioridad pero necesarias"}> {/* Se implementan las tareas sin prioridad */}
-                                <ul>
-                                    {
-                                        secondaryTasks.map((task, index) => (
-                                            <li key={index}>{task}</li>
-                                        ))
-                                    }
-                                </ul>
+                                {
+                                    secondaryTasks.map(({ id, taskS }) => (
+                                        <SingleTask id={id} task={taskS} />
+                                    ))
+                                }
                             </TaskChart>
                         </div>
                     </article>

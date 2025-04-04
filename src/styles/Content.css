@@ -31,23 +31,20 @@
     border: 2px solid rgb(119, 21, 21);
     border-radius: 10px;
 }
-.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add{
+.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add, .btn-task-modify, .btn-task-delete{
     background-color: rgb(253, 191, 191);
     color: rgb(119, 21, 21);
     border: 1px solid rgb(119, 21, 21);
     border-radius: 10px;
     padding: 0.5em 1em;
-    margin: 0.5em;
 }
-.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add:hover{
+:is(.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add, .btn-task-modify, .btn-task-delete):hover{
     background-color: rgb(119, 21, 21);
     color: white;
     border: 1px solid rgb(119, 21, 21);
     border-radius: 10px;
-    padding: 0.5em 1em;
-    margin: 0.5em;
 }
-.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add:active{
+:is(.div-lg-task-container .div-md-task-buttons .div-md-button .btn-add, .btn-task-modify, .btn-task-delete):active{
     transform: scale(0.9);
     transition: transform 0.3s ease;
 }
@@ -57,13 +54,13 @@
     height: 1.2em;
     margin-left: 0em;
 }
-.div-lg-task-container .div-md-task-buttons .form-check-priority input:checked{
+.div-lg-task-container .div-md-task-buttons input:checked{
     background-color: rgb(119, 21, 21);
+    border-color: rgb(119, 21, 21, 0.5);
 }
 
-
 /* Para un posible componente adicional */
-.ul-secondary ul li, .ul-priority ul li{
+/* .ul-secondary ul li, .ul-priority ul li{
     list-style-type: none;
     line-height: 1.8;
 }
@@ -72,5 +69,5 @@
     background-color: rgb(119, 21, 21);
 }
 .ul-secondary ul .li-md-empty-task{
-    color: rgb(0, 0, 0, 0.4);
-}
+    color: rgb(0, 0, 0, 0.3);
+} */
