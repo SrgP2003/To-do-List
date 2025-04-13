@@ -21,11 +21,8 @@ export default function Content() {
             taskS: tasks
         }
 
-        if (tasks == "") {
+        if (tasks == "")
             alert("Por favor, ingresa una tarea");
-            setPrimaryTasks([]);
-            setSecondaryTasks([]);
-        }
         else {
             if (priorityTask) {
                 setPrimaryTasks(primaryTasks => {
@@ -38,12 +35,26 @@ export default function Content() {
                 setSecondaryTasks(secondaryTasks => {
                     return (secondaryTasks) ? [...secondaryTasks, objectSecondaryTasks] : [objectSecondaryTasks];
                 })
+                setTasks("");
             }
-            setPriorityTask(false);
-            setTasks("");
         }
     }
 
+    const handleClickDeletePrimaryTask = (id) => {
+        setPrimaryTasks(taskP => {
+            if (taskP.length) {
+                return taskP.filter(task => task.id !== id);
+            }
+        });
+    }
+
+    const handleClickDeleteSecondaryTask = (id) => {
+        setSecondaryTasks(taskS => {
+            if (taskS.length) {
+                return taskS.filter(task => task.id !== id);
+            }
+        })
+    }
     return (
         <>
             <main className="main-content">
@@ -83,7 +94,7 @@ export default function Content() {
                             <TaskChart title={"Mis mayores prioridades"}> {/* Se implementan las tareas con prioridad */}
                                 {
                                     primaryTasks.map(({ id, taskP }) => (
-                                        <SingleTask id={id} task={taskP} />
+                                        <SingleTask key={id} id={id} task={taskP} titleCard={"P"} deleteTaskP={() => handleClickDeletePrimaryTask(id)} />
                                     ))
                                 }
                             </TaskChart>
@@ -92,7 +103,7 @@ export default function Content() {
                             <TaskChart title={"Sin prioridad pero necesarias"}> {/* Se implementan las tareas sin prioridad */}
                                 {
                                     secondaryTasks.map(({ id, taskS }) => (
-                                        <SingleTask id={id} task={taskS} />
+                                        <SingleTask key={id} id={id} task={taskS} titleCard={"S"} deleteTaskS={() => handleClickDeleteSecondaryTask(id)} />
                                     ))
                                 }
                             </TaskChart>

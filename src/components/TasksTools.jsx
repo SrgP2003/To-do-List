@@ -11,7 +11,7 @@ export default function TaskChart({ title, children }) {
     )
 }
 
-export function SingleTask({id, task }) {
+export function SingleTask({id, task, titleCard, deleteTaskP, deleteTaskS}) {
     return (
         <div className="card card-single-task mb-2">
             <div className="card-body">
@@ -30,7 +30,13 @@ export function SingleTask({id, task }) {
                         <button className="btn btn-task-modify w-100">Modificar</button>
                     </div>
                     <div className="col-sm-12 col-md-6 col=lg-6">
-                        <button className="btn btn-task-delete w-100">Borrar</button>
+                    {
+                        titleCard === "P"
+                        ?
+                        <button onClick={deleteTaskP} className="btn btn-task-delete w-100">Borrar</button>
+                        :
+                        <button onClick={deleteTaskS} className="btn btn-task-delete w-100">Borrar</button>
+                    }
                     </div>
                 </div>
             </div>
