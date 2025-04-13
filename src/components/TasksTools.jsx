@@ -2,7 +2,7 @@ export default function TaskChart({ title, children }) {
     return (
         <div className="card card-task-chart">
             <div className="card-header text-center">
-                <h3>{title}</h3>
+                <h4>{title}</h4>
             </div>
             <div className="card-body">
                 {children}
@@ -18,7 +18,7 @@ export function SingleTask({id, task, titleCard, deleteTaskP, deleteTaskS}) {
                 <div className="row gx-1">
                     <div className="form-check container">
                         <input id="task" type="checkbox" className="form-check-input" />
-                        <p htmlFor="task" className="form-check-label">{id}. {task}</p>
+                        <p htmlFor="task" className="form-check-label">{task}</p>
                     </div>
                 </div>
                 <hr />

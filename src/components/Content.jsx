@@ -72,15 +72,15 @@ export default function Content() {
                                 <hr />
                                 <div className="row div-md-task-buttons">
                                     <div className="col-sm-12 col-md-6 col-lg-6 div-md-button d-flex justify-content-center">
-                                        <button className="btn btn-add" onClick={handleClickAddTasks}>Agregar</button>
+                                        <button className="btn btn-add mb-1" onClick={handleClickAddTasks}>Agregar</button>
                                     </div>
                                     <div className="col-sm-12 col-md-6 col-lg-6 form-check-priority form-check form-switch d-flex align-items-center justify-content-center">
                                         <div className="row">
-                                            <div className="col-3">
+                                            <div className="col-sm-3 col-md-3 col-lg-3 d-flex align-items-center justify-content-center">
                                                 <input title="Marcar actividad como prioridad" checked={priorityTask} className="form-check-input" onChange={e => setPriorityTask(e.target.checked)} type="checkbox" role="switch" />
                                             </div>
-                                            <div className="col-9 ">
-                                                <label className="form-check-label">PRIORIDAD</label>
+                                            <div className="col-sm-12 col-md-9 col-lg-9 d-flex align-items-center justify-content-center">
+                                                <span className="form-check-label">TAREA CON PRIORIDAD</span>
                                             </div>
                                         </div>
                                     </div>
@@ -93,6 +93,10 @@ export default function Content() {
                         <div className="ul-priority col-md-12 col-lg-6">
                             <TaskChart title={"Mis mayores prioridades"}> {/* Se implementan las tareas con prioridad */}
                                 {
+                                    !primaryTasks.length
+                                    ?
+                                    <p className="p-empty-chart text-center">¡Empieza con tu primera tarea primaria!</p>
+                                    :
                                     primaryTasks.map(({ id, taskP }) => (
                                         <SingleTask key={id} id={id} task={taskP} titleCard={"P"} deleteTaskP={() => handleClickDeletePrimaryTask(id)} />
                                     ))
@@ -102,6 +106,10 @@ export default function Content() {
                         <div className="ul-secondary col-md-12 col-lg-6">
                             <TaskChart title={"Sin prioridad pero necesarias"}> {/* Se implementan las tareas sin prioridad */}
                                 {
+                                    !secondaryTasks.length
+                                    ?
+                                    <p className="p-empty-chart text-center">¡Empieza con tu primera tarea secundaria!</p>
+                                    :
                                     secondaryTasks.map(({ id, taskS }) => (
                                         <SingleTask key={id} id={id} task={taskS} titleCard={"S"} deleteTaskS={() => handleClickDeleteSecondaryTask(id)} />
                                     ))

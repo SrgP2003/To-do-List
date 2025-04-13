@@ -52,22 +52,18 @@
     background-color: rgb(255, 243, 243);
     width: 2.2em;
     height: 1.2em;
-    margin-left: 0em;
+    margin-left: -1.5em;
+    cursor: pointer;
+}
+.div-lg-task-container .div-md-task-buttons .form-check-priority span{
+    margin-left: -1.2em;
 }
 .div-lg-task-container .div-md-task-buttons input:checked{
     background-color: rgb(119, 21, 21);
     border-color: rgb(119, 21, 21, 0.5);
 }
-
-/* Para un posible componente adicional */
-/* .ul-secondary ul li, .ul-priority ul li{
-    list-style-type: none;
-    line-height: 1.8;
+.p-empty-chart{
+    font-size: 0.9em;
+    color: rgba(89, 92, 92, 0.527);
+    cursor: pointer;
 }
-.ul-secondary ul li .form-check-both:checked,
-.ul-primary ul li .form-check-both:checked{
-    background-color: rgb(119, 21, 21);
-}
-.ul-secondary ul .li-md-empty-task{
-    color: rgb(0, 0, 0, 0.3);
-} */
