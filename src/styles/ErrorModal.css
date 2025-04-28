@@ -1,0 +1,29 @@
+.error-modal-title{
+    background-color: rgb(119, 21, 21, .9);
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.error-modal-body, .error-modal-footer{
+    background-color: rgb(253, 191, 191);
+    font-size: 1.2em;
+}
+.btn-accept{
+    background-color: rgb(253, 191, 191);
+    color: rgb(119, 21, 21);
+    border: 1px solid rgb(119, 21, 21);
+    border-radius: 10px;
+    padding: 0.5em 1em;
+}
+.btn-accept:hover{
+    background-color: rgb(119, 21, 21);
+    color: white;
+    border: 1px solid rgb(119, 21, 21);
+    border-radius: 10px;
+}
+.btn-accept:active{
+    background-color: rgb(119, 21, 21);
+    color: white;
+    border: 1px solid rgb(119, 21, 21);
+    border-radius: 10px;
+}
