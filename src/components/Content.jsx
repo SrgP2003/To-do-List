@@ -1,31 +1,58 @@
 import TaskChart from "./TasksTools";
 import { SingleTask } from "./TasksTools";
 import ErrorModal from "./ErrorModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../styles/Content.css";
 
 export default function Content() {
     const [tasks, setTasks] = useState(""); //Estado para almacenar tareas ingresadas
-    const [primaryTasks, setPrimaryTasks] = useState([]); //Estado para almacenar tareas primarias
-    const [secondaryTasks, setSecondaryTasks] = useState([]); //Estado para almacenar tareas secundarias
     const [priorityTask, setPriorityTask] = useState(false); //Estado booleano que indica si una tarea es primaria o secundaria
     const [show, setShow] = useState(false); //Estado utilizable para el componente ErrorModal: indica si el modal se muestra en base a condición
+
+    const [primaryTasks, setPrimaryTasks] = useState(() => {//Estado para almacenar tareas primarias: uso de localStorage
+        const storagePrimaryTasks = localStorage.getItem("primaryTasks");
+        try {
+            return storagePrimaryTasks ? JSON.parse(storagePrimaryTasks) : []; //Se obtienen las tareas primarias del localStorage. De lo contrario, inicializa un array vacio
+        }
+        catch (error) {
+            console.error("An error ocurred while trying to save the primary tasks:", error);
+            return [];
+        }
+    });
+    const [secondaryTasks, setSecondaryTasks] = useState(() => { //Estado para almacenar tareas secundarias: uso de localStorage
+        const storageSecondaryTasks = localStorage.getItem("secondaryTasks");
+        try {
+            return storageSecondaryTasks ? JSON.parse(storageSecondaryTasks) : []; //Se obtienen las tareas secundarias del localStorage. De lo contrario, inicializa un array vacio
+        }
+        catch (error) {
+            console.error("An error ocurred while trying to save the secondary tasks:", error);
+            return [];
+        }
+    });
 
     //Estados que inicialmente son null pero se llenan con el id de la tarea que se está editando
     //Esto es para poder editar tareas y no tener que volver a escribirlas
     const [editingPrimaryTaskId, setEditingPrimaryTaskId] = useState(null); //Estado para almacenar el id de la tarea primaria que se está editando
     const [editingSecondaryTaskId, setEditingSecondaryTaskId] = useState(null); //Estado para almacenar el id de la tarea secundaria que se está editando
 
+    useEffect(() => {
+        localStorage.setItem("primaryTasks", JSON.stringify(primaryTasks)); //Se almacenan las tareas primarias en el localStorage
+    }, [primaryTasks]);
+
+    useEffect(() => {
+        localStorage.setItem("secondaryTasks", JSON.stringify(secondaryTasks)); //Se almacenan las tareas secundarias en el localStorage
+    }, [secondaryTasks]);
+
     //Funcion que ejecuta la logica para agregar tareas, ya sean primarias o secundarias.
     function handleClickAddTasks() {
         //Objecto para almacenar tareas primarias
         const objectPrimaryTasks = {
-            id: primaryTasks.length + 1,
+            id: Date.now(),
             taskP: tasks
         }
         //Objecto para almacenar tareas primarias
         const objectSecondaryTasks = {
-            id: secondaryTasks.length + 1,
+            id: Date.now(),
             taskS: tasks
         }
         if (tasks === "") { //En esta parte, se muestra el modal de error si no se ha escrito nada en el textarea
@@ -40,7 +67,7 @@ export default function Content() {
                 setTasks("");
             }
             else {
-                setSecondaryTasks(secondaryTasks => {
+                setSecondaryTasks(secondaryTasks => { //De lo contrario, se almacenan tareas secundarias
                     return (secondaryTasks) ? [...secondaryTasks, objectSecondaryTasks] : [objectSecondaryTasks];
                 })
                 setTasks("");
@@ -49,18 +76,16 @@ export default function Content() {
     }
     //Función que contiene la lógica para eliminar tareas primarias
     function handleClickDeletePrimaryTask(id) {
-        const s = setPrimaryTasks(taskP => {
-            if (taskP.length) {
-                return taskP.filter(task => task.id !== id);
-            }
+        setPrimaryTasks(taskP => {
+            localStorage.removeItem("primaryTasks"); //Se eliminan las tareas primarias del localStorage
+            return taskP.filter(task => task.id !== id);
         });
     }
     //Función que contiene la lógica para eliminar tareas secundarias
     function handleClickDeleteSecondaryTask(id) {
         setSecondaryTasks(taskS => {
-            if (taskS.length) {
-                return taskS.filter(task => task.id !== id);
-            }
+            localStorage.removeItem("secondaryTasks"); //Se eliminan las tareas secundarias del localStorage
+            return taskS.filter(task => task.id !== id);
         })
     }
     //Función que contiene la lógica para editar tareas primarias que ya fueron registradas
@@ -112,7 +137,7 @@ export default function Content() {
                                                 <input title="Marcar actividad como prioridad" checked={priorityTask} className="form-check-input" onChange={e => setPriorityTask(e.target.checked)} type="checkbox" role="switch" />
                                             </div>
                                             <div className="col-sm-12 col-md-9 col-lg-9 d-flex align-items-center justify-content-center">
-                                                <span className="form-check-label">TAREA CON PRIORIDAD</span>
+                                                <span className="form-check-label mt-1">TAREA CON PRIORIDAD</span>
                                             </div>
                                         </div>
                                     </div>
